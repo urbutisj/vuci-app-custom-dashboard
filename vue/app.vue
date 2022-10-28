@@ -8,7 +8,7 @@
     </div>
 </template>
 <script>
-import CardComponent from '../components/VuciDashboard/CardComponent.vue'
+import CardComponent from './components/CardComponent.vue'
 export default {
   components: { CardComponent },
   data () {
