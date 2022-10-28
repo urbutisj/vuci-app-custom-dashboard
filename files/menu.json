@@ -1,0 +1,11 @@
+{
+  "examples": {
+      "title" : "Examples",
+      "index" : 90
+  },
+  "examples/new_dashboard" : {
+      "title" : "New Dashboard",
+      "view" : "vuci-app-cards",
+      "index" : 20
+  }
+}
