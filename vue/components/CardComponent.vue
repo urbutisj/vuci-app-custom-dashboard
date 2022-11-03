@@ -2,20 +2,12 @@
   <a-card class="card">
     <div class="card-details">
       <div class="card-header">
-        <h2>{{singleCard.name}}</h2>
+        <h2>{{card.title}}</h2>
       </div>
-      <div class="card-body" v-if="singleCard.id === 3">
-        <div class="">
-          <label>{{singleCard.routerTime.label}}</label>
-          <span>{{ "%t".format(singleCard.routerTime.value) }}</span>
-        </div>
-        <div class="">
-          <label>Local Time:</label>
-          <span>{{formatLocalTime}}</span>
-        </div>
-        <div>
-          <label>CPU:</label>
-          <span>{{singleCard.cpuUsage}}</span>
+      <div class="card-body">
+        <div v-for="(cardData, index) in card.data" :key="index" >
+          <label>{{cardData.title}}</label>
+          <div>{{cardData.value}}</div>
         </div>
       </div>
     </div>
@@ -25,22 +17,7 @@
 <script>
 
 export default {
-  props: ['singleCard'],
-  computed: {
-    formatLocalTime () {
-      const d = new Date(this.singleCard.routerLocalTime.value * 1000)
-      const year = d.getFullYear().toString().padStart(2, 0)
-      const month = (d.getMonth() + 1).toString().padStart(2, 0)
-      const date = d.getDate().toString().padStart(2, 0)
-      const hour = d.getHours()
-      const min = d.getMinutes()
-      const sec = d.getSeconds()
-      return `${year}-${month}-${date} %02d:%02d:%02d`.format(hour, min, sec)
-    }
-  },
-  created () {
-    console.log(this.singleCard)
-  }
+  props: ['card']
 }
 </script>
 <style>
