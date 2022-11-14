@@ -3,12 +3,26 @@
     <div class="card-details">
       <div class="card-header">
         <h2>{{card.title}}</h2>
-        <slot name="cpu"></slot>
+        <template v-if="card.extraHeader">
+          <UsageLine :label="card.extraHeader.title" :percent="card.extraHeader.value" />
+        </template>
+        <template v-if="card.extraHeaderWifi">
+          <div class="wifi">
+            <label>{{card.extraHeaderWifi.title}}</label>
+            <img v-if="card.extraHeaderWifi.on" src='../../../public/icons/wifi-active.svg' />
+            <img v-if="!card.extraHeaderWifi.on" src='../../../public/icons/wifi.svg' />
+          </div>
+        </template>
       </div>
       <div class="card-body">
         <div v-for="(cardData, index) in card.data" :key="index" >
           <h4>{{cardData.title}}</h4>
           <label>{{cardData.value}}</label>
+            <div v-if="cardData.title === 'Memory Usage'" class="usage">
+              <div v-for="(usage, index) in cardData.data" :key="index">
+                <UsageLine :label="usage.title" :percent="usage.value" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -16,8 +30,13 @@
 </template>
 
 <script>
+import UsageLine from './UsageLine.vue'
 export default {
-  props: ['card']
+  props: ['card'],
+  components: { UsageLine },
+  created () {
+    console.log(this.card)
+  }
 }
 </script>
 <style>
@@ -53,4 +72,18 @@ export default {
 .card-body>div:not(:last-child){
   border-bottom: 1px solid #bebebe;
 }
+.usage {
+  display: flex;
+  gap: 1rem;
+}
+.wifi {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wifi img {
+  width: 24px;
+}
+
 </style>
